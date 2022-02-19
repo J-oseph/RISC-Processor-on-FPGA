@@ -1,21 +1,25 @@
+`define RFW 2
 module Instruction_Decode (
-	input  wire [7:0]	instruction,
-	output wire [1:0]	reg1,
-	output wire [1:0]	reg2,
-	output wire [1:0]	wreg,
-	output wire [1:0]	type
-	//output wire [7:0]	wdata
-	//output wire 		rf_enable
+	input  wire [31:0]		in_inst,
+	output wire [`RFW-1:0]	reg1,
+	output wire [`RFW-1:0]	reg2
 );
-	// 00 : add
-	// r1 r2 wr type
-	// r11 r10 r21 r20 w1 w0 rf_enable X
 
-	assign reg1 		= instruction[7:6];
-	assign reg2 		= instruction[5:4];
-	assign wreg 		= instruction[3:2];
-	assign type 		= instruction[1:0];
-	//assign wdata 		= {instruction[0],instruction[1],instruction[2],instruction[3],instruction[4],instruction[5],instruction[6],instruction[7]};
-	//assign rf_enable 	= instruction[1];
+	//R type:	funct7[6:0] rs2[4:0] rs1[4:0] funct3[2:0] rd[4:0] opcode[6:0] 7+5+5+3+5+7
+	//I type:	imm[11:0] 				rs1[4:0] funct3[2:0] rd[4:0] opcode[6:0] 12 +5+3+5+7
+	
+	wire [4:0] rs2, rs1, rd;
+	wire [6:0] funct7, opcode;
+	wire [2:0] funct3;
+	
+	assign funct7 	= in_inst[31:25];
+	assign rs2 		= in_inst[24:20];
+	assign rs1		= in_inst[19:15];
+	assign funct3	= in_inst[14:12];
+	assign rd		= in_inst[11:7 ];
+	assign opcode	= in_inst[6 :0 ];
+
+	assign reg1 	= rs1[`RFW-1:0];
+	assign reg2 	= rs2[`RFW-1:0];
 
 endmodule

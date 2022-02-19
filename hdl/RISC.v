@@ -1,14 +1,16 @@
+`define RFW 2
 module RISC(
-	input  wire 		clk,
-	input  wire [1:0]	pc_in,
-	input	 wire			im_cs,
-	input	 wire			rf_we,
-	input	 wire			rf_reset,
-	output wire [1:0] pc_out,
-	output wire [7:0] if_id_out,
-	output wire [7:0] id_exe_r1,
-	output wire [7:0] id_exe_r2,
-	output wire [7:0] exe_mem_out
+	input  wire 			clk,
+	input  wire [1:0]		pc_in,
+	input	 wire				im_cs,
+	input	 wire				rf_we_e,
+	input	 wire				rf_reset,
+	output wire [1:0] 	pc_out,
+	output wire [31:0] 	if_id_out,
+	output wire [7:0] 	id_exe_r1,
+	output wire [7:0] 	id_exe_r2,
+	output wire [7:0] 	exe_mem_out,
+	output wire [7:0] 	mem_wb_out
 	/*/////////// KEY //////////
 	input 		     [1:0]		KEY,
 
@@ -18,16 +20,17 @@ module RISC(
 	//////////// SW //////////
 	input 		     [9:0]		SW*/
 );
-	wire [7:0] im_out, wdata, rf_r1, rf_r2, id_exe_out_inst, alu_out, exe_mem_inst;
-	wire [1:0] reg1, reg2, wreg, type;
+	wire [31:0] im_out, id_exe_out_inst, exe_mem_inst, mem_wb_inst;
+	wire [7:0] wdata, rf_r1, rf_r2, alu_out;
+	wire [`RFW-1:0] reg1, reg2, wreg;
 	
 	Program_Counter pc0		(.clk(clk), .in(pc_in), .out(pc_out));
 	
-	Instruction_Mem im0		(.address(pc_out), .im_cs(im_cs), .data(im_out));
+	Instruction_Mem im0		(.address(pc_out), .im_cs(im_cs), .im_out(im_out));
 	
 	IF_ID IF_ID0				(.clk(clk), .in(im_out), .out(if_id_out));
 	
-	Instruction_Decode id0	(.instruction(if_id_out), .reg1(reg1), .reg2(reg2), .wreg(wreg), .type(type));
+	Instruction_Decode id0	(.in_inst(if_id_out), .reg1(reg1), .reg2(reg2));
 	
 	Register_File rf0			(.clk(clk), .rf_we(rf_we), .rf_reset(rf_reset), .reg1(reg1), .reg2(reg2), 
 									 .wreg(wreg), .wdata(wdata), .reg1data(rf_r1), .reg2data(rf_r2));
@@ -37,6 +40,10 @@ module RISC(
 	ALU alu0						(.in_r1(id_exe_r1), .in_r2(id_exe_r2), .in_inst(id_exe_out_inst), .out(alu_out));
 	
 	EXE_MEM exe_mem0			(.clk(clk), .in(alu_out), .in_inst(id_exe_out_inst), .out(exe_mem_out), .out_inst(exe_mem_inst));
+	
+	MEM_WB mem_wb0				(.clk(clk), .in_data(exe_mem_out), .in_inst(exe_mem_inst), .out_data(mem_wb_out), .out_inst(mem_wb_inst));
+	
+	Write_Back_Logic wbl0	(.in_data(mem_wb_out), .in_inst(mem_wb_inst), .rf_we_e(rf_we_e), .rf_we(rf_we), .wdata(wdata), .wreg(wreg));
 	
 endmodule
 

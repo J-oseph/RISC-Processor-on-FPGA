@@ -1,8 +1,8 @@
 `timescale 1ps/1ps
 module IF_ID (
 	input wire 			clk,	
-	input wire [7:0] 	in,	
-	output reg [7:0] 	out
+	input wire [31:0] in,	
+	output reg [31:0] out
 );
 
 	always @(posedge clk) begin

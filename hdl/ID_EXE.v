@@ -1,12 +1,12 @@
 `timescale 1ps/1ps
 module ID_EXE(
-	input wire 			clk,	
-	input wire [7:0] 	in_r1,	
-	input wire [7:0] 	in_r2,
-	input wire [7:0] 	in_inst,		
-	output reg [7:0] 	out_r1,	
-	output reg [7:0] 	out_r2,
-	output reg [7:0] 	out_inst
+	input wire 				clk,	
+	input wire [7:0] 		in_r1,	
+	input wire [7:0] 		in_r2,
+	input wire [31:0] 	in_inst,		
+	output reg [7:0] 		out_r1,	
+	output reg [7:0] 		out_r2,
+	output reg [31:0] 	out_inst
 	
 );
 
