@@ -1,3 +1,13 @@
+/* 		
+		CODED BY Joseph A. 
+		GitHub: J-oseph
+		February 20, 2022.
+*/
+
+/*
+	THIS IS THE TEST BENCH. RUN SIMULATIONS FROM THIS FILE.
+*/
+
 `define RFW 5
 `define IMW 4
 `define DW  32
@@ -16,7 +26,7 @@ module tb_RISC;
 	reg 		  			rf_res;
 	reg 		  			rf_writeenable;
 	reg		  			clk;
-	reg  [`IMW-1:0]	pc_input;
+	reg  	[`IMW-1:0]	pc_input;
 	reg  					im_chipselect;
 	 
 	assign pc_in  		= pc_input [`IMW-1:0];

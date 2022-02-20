@@ -1,3 +1,8 @@
+/* 		
+		CODED BY Joseph A. 
+		GitHub: J-oseph
+		February 20, 2022.
+*/
 `define DW  32
 `define IW  32
 `timescale 1ps/1ps

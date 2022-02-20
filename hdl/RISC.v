@@ -1,3 +1,12 @@
+/* 		
+		CODED BY Joseph A. 
+		GitHub: J-oseph
+		February 20, 2022.
+*/
+
+/*
+	THIS IS THE TOP LEVEL FILE, BESIDES THE TEST BENCH.
+*/
 `define RFW 5
 `define IMW 4
 `define DW  32
@@ -14,14 +23,6 @@ module RISC(
 	output wire [`DW-1:0] 	id_exe_r2,
 	output wire [`DW-1:0] 	exe_mem_out,
 	output wire [`DW-1:0] 	mem_wb_out
-	/*/////////// KEY //////////
-	input 		     [1:0]		KEY,
-
-	//////////// LED //////////
-	output		     [9:0]		LEDR,
-
-	//////////// SW //////////
-	input 		     [9:0]		SW*/
 );
 	wire [`IW-1:0] 	im_out, id_exe_out_inst, exe_mem_inst, mem_wb_inst;
 	wire [`DW-1:0] 	wdata, rf_r1, rf_r2, alu_out;
@@ -60,6 +61,14 @@ endmodule
 
 
 
+	/*/////////// KEY //////////
+	input 		     [1:0]		KEY,
+
+	//////////// LED //////////
+	output		     [9:0]		LEDR,
+
+	//////////// SW //////////
+	input 		     [9:0]		SW*/
 
 
 	/*//////////// CLOCK //////////

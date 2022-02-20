@@ -1,3 +1,8 @@
+/* 		
+		CODED BY Joseph A. 
+		GitHub: J-oseph
+		February 20, 2022.
+*/
 `define RFW 5
 `define IW  32
 module Instruction_Decode (
