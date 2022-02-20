@@ -22,3 +22,9 @@ Please refer to a RISC-V manual to see how to use these instruction.
 -Forwarding is supported.    
 -Extra code for DE10-Lite board is included, but commented out.   
 -Overflow/zero detection is not implemented.    
+
+### TO DO ###
++ SB type instructions    
++ U  type instructions    
++ UJ type instructions    
++ Memory/S type instructions (maybe)  
