@@ -1,12 +1,14 @@
+`define DW  32
+`define IW  32
 `timescale 1ps/1ps
 module ID_EXE(
 	input wire 				clk,	
-	input wire [7:0] 		in_r1,	
-	input wire [7:0] 		in_r2,
-	input wire [31:0] 	in_inst,		
-	output reg [7:0] 		out_r1,	
-	output reg [7:0] 		out_r2,
-	output reg [31:0] 	out_inst
+	input wire [`DW-1:0] 		in_r1,	
+	input wire [`DW-1:0] 		in_r2,
+	input wire [`IW-1:0] 	in_inst,		
+	output reg [`DW-1:0] 		out_r1,	
+	output reg [`DW-1:0] 		out_r2,
+	output reg [`IW-1:0] 	out_inst
 	
 );
 

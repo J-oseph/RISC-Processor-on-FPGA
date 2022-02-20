@@ -1,10 +1,12 @@
+`define DW  32
+`define IW  32
 `timescale 1ps/1ps
 module EXE_MEM (
 	input wire 				clk,	
-	input wire [7:0] 		in,		
-	input wire [31:0] 	in_inst,
-	output reg [7:0] 		out,
-	output reg [31:0] 	out_inst
+	input wire [`DW-1:0] in,		
+	input wire [`IW-1:0] in_inst,
+	output reg [`DW-1:0] out,
+	output reg [`IW-1:0] out_inst
 );
 
 	always @(posedge clk) begin

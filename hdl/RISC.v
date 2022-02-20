@@ -1,16 +1,19 @@
-`define RFW 2
+`define RFW 5
+`define IMW 4
+`define DW  32
+`define IW  32
 module RISC(
-	input  wire 			clk,
-	input  wire [1:0]		pc_in,
-	input	 wire				im_cs,
-	input	 wire				rf_we_e,
-	input	 wire				rf_reset,
-	output wire [1:0] 	pc_out,
-	output wire [31:0] 	if_id_out,
-	output wire [7:0] 	id_exe_r1,
-	output wire [7:0] 	id_exe_r2,
-	output wire [7:0] 	exe_mem_out,
-	output wire [7:0] 	mem_wb_out
+	input  wire 				clk,
+	input  wire [`IMW-1:0]	pc_in,
+	input	 wire					im_cs,
+	input	 wire					rf_we_e,
+	input	 wire					rf_reset,
+	output wire [`IMW-1:0] 	pc_out,
+	output wire [`IW-1:0] 	if_id_out,
+	output wire [`DW-1:0] 	id_exe_r1,
+	output wire [`DW-1:0] 	id_exe_r2,
+	output wire [`DW-1:0] 	exe_mem_out,
+	output wire [`DW-1:0] 	mem_wb_out
 	/*/////////// KEY //////////
 	input 		     [1:0]		KEY,
 
@@ -20,9 +23,9 @@ module RISC(
 	//////////// SW //////////
 	input 		     [9:0]		SW*/
 );
-	wire [31:0] im_out, id_exe_out_inst, exe_mem_inst, mem_wb_inst;
-	wire [7:0] wdata, rf_r1, rf_r2, alu_out;
-	wire [`RFW-1:0] reg1, reg2, wreg;
+	wire [`IW-1:0] 	im_out, id_exe_out_inst, exe_mem_inst, mem_wb_inst;
+	wire [`DW-1:0] 	wdata, rf_r1, rf_r2, alu_out;
+	wire [`RFW-1:0] 	reg1, reg2, wreg;
 	
 	Program_Counter pc0		(.clk(clk), .in(pc_in), .out(pc_out));
 	
@@ -32,8 +35,7 @@ module RISC(
 	
 	Instruction_Decode id0	(.in_inst(if_id_out), .reg1(reg1), .reg2(reg2));
 	
-	Register_File rf0			(.clk(clk), .rf_we(rf_we), .rf_reset(rf_reset), .reg1(reg1), .reg2(reg2), 
-									 .wreg(wreg), .wdata(wdata), .reg1data(rf_r1), .reg2data(rf_r2));
+	Register_File rf0			(.clk(clk), .rf_we(rf_we), .rf_reset(rf_reset), .alu_forward_inst(id_exe_out_inst), .mem_forward_inst(exe_mem_inst), .reg1(reg1), .reg2(reg2), .wreg(wreg), .wdata(wdata), .alu_rf_forward(alu_out), .mem_rf_forward(exe_mem_out), .reg1data(rf_r1), .reg2data(rf_r2));
 									 
 	ID_EXE id_exe0				(.clk(clk), .in_r1(rf_r1), .in_r2(rf_r2), .in_inst(if_id_out), .out_r1(id_exe_r1), .out_r2(id_exe_r2), .out_inst(id_exe_out_inst));
 	

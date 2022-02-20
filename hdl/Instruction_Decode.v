@@ -1,8 +1,9 @@
-`define RFW 2
+`define RFW 5
+`define IW  32
 module Instruction_Decode (
-	input  wire [31:0]		in_inst,
-	output wire [`RFW-1:0]	reg1,
-	output wire [`RFW-1:0]	reg2
+	input  wire [`IW-1:0]		in_inst,
+	output reg  [`RFW-1:0]	reg1,
+	output reg  [`RFW-1:0]	reg2
 );
 
 	//R type:	funct7[6:0] rs2[4:0] rs1[4:0] funct3[2:0] rd[4:0] opcode[6:0] 7+5+5+3+5+7
@@ -11,6 +12,7 @@ module Instruction_Decode (
 	wire [4:0] rs2, rs1, rd;
 	wire [6:0] funct7, opcode;
 	wire [2:0] funct3;
+	wire [11:0] imm;
 	
 	assign funct7 	= in_inst[31:25];
 	assign rs2 		= in_inst[24:20];
@@ -18,8 +20,24 @@ module Instruction_Decode (
 	assign funct3	= in_inst[14:12];
 	assign rd		= in_inst[11:7 ];
 	assign opcode	= in_inst[6 :0 ];
-
-	assign reg1 	= rs1[`RFW-1:0];
-	assign reg2 	= rs2[`RFW-1:0];
+	
+	assign imm		= in_inst[31:20];
+	
+	always @(*) begin
+		if (opcode == 7'h33 | opcode == 7'h3A) begin
+			// R
+			reg1 	= rs1[`RFW-1:0];
+			reg2 	= rs2[`RFW-1:0];
+		end
+		else if (opcode == 7'h03 | opcode == 7'h0F | opcode == 7'h13 | opcode == 7'h1B) begin
+			// I
+			reg1 = rs1[`RFW-1:0];
+			reg2 = rs1[`RFW-1:0]; // don't care, but will assign to the same reg
+			
+		end else begin
+			reg1 = 32'bx;
+			reg2 = 32'bx;
+		end
+	end
 
 endmodule
