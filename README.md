@@ -1,4 +1,7 @@
 ### RISC-Processor-on-FPGA ###
+Created by Joseph A.    
+GitHub: J-oseph   
+https://github.com/J-oseph/RISC-Processor-on-FPGA      
 Verilog implimentation of a 5-stage RISC processor. Will most likely not ever be fully capable.   
 Made using Quartus and simulated with ModelSim.
 
