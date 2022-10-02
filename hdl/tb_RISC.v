@@ -7,6 +7,8 @@
 /*
 	THIS IS THE TEST BENCH. RUN SIMULATIONS FROM THIS FILE.
 */
+`include "include.v"
+
 
 `define RFW 5
 `define IMW 4
@@ -37,10 +39,13 @@ module tb_RISC;
 	
 
 	RISC risc0(	.clk(clk), 					.pc_in(pc_in), 				.im_cs(im_cs), 				.rf_we_e(rf_we), 
-					.rf_reset(rf_reset),		.pc_out(pc_out), 				.if_id_out(if_id_out), 		.id_exe_r1(id_exe_r1),
-					.id_exe_r2(id_exe_r2),	.exe_mem_out(exe_mem_out), .mem_wb_out(mem_wb_out));
+				.rf_reset(rf_reset),		.pc_out(pc_out), 			.if_id_out(if_id_out), 		.id_exe_r1(id_exe_r1),
+				.id_exe_r2(id_exe_r2),		.exe_mem_out(exe_mem_out), 	.mem_wb_out(mem_wb_out));
 	
 	initial begin
+		$dumpfile("RISC.vcd");
+		$dumpvars(0, tb_RISC);
+
 		clk = 0;
 		rf_writeenable = 0;
 		pc_input = 0;
@@ -57,12 +62,13 @@ module tb_RISC;
 		repeat(32) begin
 			#100 pc_input = pc_input + 1;
 		end
-			
-		//$finish;
+
+		#100 $display("Completed");
+		$finish;
 	end
 	
 	always begin
-		#50 clk = ~clk;
+		#10 clk = ~clk;
 	end
 	
 	

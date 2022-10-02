@@ -1,0 +1,3 @@
+
+CORE:
+PC - [IM] - IF/ID - [ID - RF] - ID/EXE - [ALU] - EXE/MEM - [_] - MEM/WB - [WBL]
