@@ -2,9 +2,22 @@
 Created by Joseph A.    
 GitHub: J-oseph   
 https://github.com/J-oseph/RISC-Processor-on-FPGA      
-Verilog implimentation of a 5-stage RISC processor. Will most likely not ever be fully capable.   
-Made using Quartus and simulated with ModelSim.
+Verilog implimentation of a 5-stage RISC processor. Goal is a single core, RV32I processor.
+Simulated using IVerilog and viewed with GTKWAVE on Linux.
 
+Use this command to compile and view the results:   
+  iverilog -o CORE.vvp tb_CORE.v && vvp CORE.vvp && gtkwave CORE.vcd   
+    
+.   
+.   
+.   
+.   
+.   
+.   
+.   
+.   
+. 
+### DUE TO THE CODE CURRENTLY BEING COMPLETELY REWRITTEN, THE BELOW INFORMATION IS OUT OF DATE ###
 ### SUPPORTED RISC-V INSTRUCTIONS ###
 R: add, sub, sll, slt, xor, srl, or, and   
 I: addi, slli, slti, xori, srli, ori, andi  
