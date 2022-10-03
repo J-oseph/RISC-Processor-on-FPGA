@@ -13,4 +13,20 @@
 `include "MEM_WB.v"		// memory / write back buffer
 `include "WB.v"			// write back
 
+// R-TYPE
+`define OP 		12 	//01100
+// I-TYPE
+`define OP_IMM 	4	//00100
+`define JALR 	25	//11001
+`define LOAD 	0	//00000
+`define SYSTEM 	28	//11100
+// S-TYPE
+`define STORE 	8	//01000
+// B-TYPE
+`define BRANCH 	24	//11000
+// U-TYPE
+`define LUI 	13	//01101 
+`define AUIPC 	5	//00101
+// J-TYPE
+`define JAL 	27	//11011
 

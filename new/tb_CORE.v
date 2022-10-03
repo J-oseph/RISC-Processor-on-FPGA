@@ -20,6 +20,7 @@ module tb_CORE;
 	CORE #(.RFW(RFW),.IMW(IMW),.DW(DW),.IW(IW))		core(.clk(clk),.start(start));
 	
 	initial begin
+		$display("\n");
 		$dumpfile("CORE.vcd");
 		$dumpvars(0, tb_CORE);
 
@@ -27,7 +28,7 @@ module tb_CORE;
 		start = 1'b0;
 		#1 start = 1'b1;
 
-		#200 $display("Completed Simulation :)");
+		#200 $display("==== Completed Simulation :D ====\n");
 		$finish;
 	end
 	

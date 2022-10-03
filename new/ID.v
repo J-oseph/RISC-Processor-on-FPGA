@@ -1,21 +1,4 @@
-
-// R-TYPE
-`define OP 		12 	//01100
-// I-TYPE
-`define OP_IMM 	4	//00100
-`define JALR 	25	//11001
-`define LOAD 	0	//00000
-`define SYSTEM 	28	//11100
-// S-TYPE
-`define STORE 	8	//01000
-// B-TYPE
-`define BRANCH 	24	//11000
-// U-TYPE
-`define LUI 	13	//01101 
-`define AUIPC 	5	//00101
-// J-TYPE
-`define JAL 	27	//11011
-
+`include "definitions.v"
 module ID 
 #(	parameter RFW = 5,
 	parameter IMW = 4,
@@ -31,11 +14,11 @@ module ID
 	wire [6:0] opcode;
 	wire [2:0] funct3;
 	wire [DW-1:0] imm_I, imm_U, imm_S, imm_B, imm_J;
-	
+
 	assign imm_I	= { {20{inst[31]}}, inst[30:20] };
 	assign imm_S	= { {20{inst[31]}}, inst[30:25],inst[11:7]};
 	assign imm_B	= { {19{inst[31]}},inst[7],inst[30:25],inst[11:8], 1'b0};
-	assign imm_U	= { {inst[31:12]}, {13{1'b0}} };
+	assign imm_U	= { {inst[31:12]}, {12{1'b0}} };
 	assign imm_J	= { {11{inst[31]}}, inst[19:12],inst[20],inst[30:21], 1'b0};
 	assign funct7 	= inst[31:25];
 	assign rs2 		= inst[24:20];

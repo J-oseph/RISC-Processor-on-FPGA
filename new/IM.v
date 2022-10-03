@@ -8,7 +8,7 @@ module IM
 	output reg [IW-1:0] out);
 
 	integer i;
-	reg [IW-1:0] im[2**IMW-1:0];
+	reg [IW-1:0] im[0:2**IMW-1];
 
 	always @(*) begin
 		case (address)
