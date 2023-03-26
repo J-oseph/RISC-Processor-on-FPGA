@@ -1,13 +1,13 @@
 /* 		
 		CODED BY Joseph A. 
 		GitHub: J-oseph
-		February 20, 2022.
+		March, 2023.
 */
 
 /*
 	THIS IS THE TEST BENCH. RUN SIMULATIONS FROM THIS FILE.
 */
-`include "include.v"
+`include "CORE.v"
 
 module tb_CORE;
 	reg clk;
@@ -21,7 +21,7 @@ module tb_CORE;
 	
 	initial begin
 		$display("\n");
-		$dumpfile("CORE.vcd");
+		$dumpfile("temp/CORE.vcd");
 		$dumpvars(0, tb_CORE);
 
 		clk = 1'b0;

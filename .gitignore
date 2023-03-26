@@ -1,4 +1,7 @@
 *.v.bak
 *.vcd
 *.vvd
+*.vvp
 notes.txt
+temp/*
+!.gitkeep

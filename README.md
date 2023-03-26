@@ -6,7 +6,7 @@ Verilog implimentation of a 5-stage RISC processor. Goal is a single core, RV32I
 Simulated using IVerilog and viewed with GTKWAVE on Linux.
 
 Use this command to compile and view the results:   
-  iverilog -o CORE.vvp tb_CORE.v && vvp CORE.vvp && gtkwave CORE.vcd   
+  iverilog -o CORE.vvd tb_CORE.v && vvp CORE.vvp && gtkwave CORE.vcd   
     
 .   
 .   

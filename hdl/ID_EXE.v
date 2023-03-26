@@ -1,26 +1,22 @@
-/* 		
-		CODED BY Joseph A. 
-		GitHub: J-oseph
-		February 20, 2022.
-*/
-`define DW  32
-`define IW  32
-`timescale 1ps/1ps
-module ID_EXE(
-	input wire 				clk,	
-	input wire [`DW-1:0] 		in_r1,	
-	input wire [`DW-1:0] 		in_r2,
-	input wire [`IW-1:0] 	in_inst,		
-	output reg [`DW-1:0] 		out_r1,	
-	output reg [`DW-1:0] 		out_r2,
-	output reg [`IW-1:0] 	out_inst
-	
-);
+
+module ID_EXE
+#(	parameter RFW = 5,
+	parameter IMW = 4,
+	parameter DW = 32,
+	parameter IW = 32)
+(	input wire clk,
+	input wire [IW-1:0] in_inst,
+	input wire [DW-1:0] r1,
+	input wire [DW-1:0] r2,
+	output reg [DW-1:0] r1_o,
+	output reg [DW-1:0] r2_o,
+	output reg [IW-1:0] out_inst);
 
 	always @(posedge clk) begin
-		out_r1 	<= #5 in_r1;
-		out_r2 	<= #5 in_r2;
-		out_inst <= #5 in_inst;
+		out_inst <= #1 in_inst;
+		r1_o <= #1 r1;
+		r2_o <= #1 r2;
 	end
+
 
 endmodule
