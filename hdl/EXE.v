@@ -1,4 +1,4 @@
-`include "definitions.v"
+`include "hdl/definitions.v"
 module EXE 
 #(	parameter RFW = 5,
 	parameter IMW = 4,
@@ -7,7 +7,6 @@ module EXE
 (	input wire [IW-1:0] inst,
 	input wire [DW-1:0] dataA,
 	input wire [DW-1:0] dataB,
-	output reg [IW-1:0] inst_o,
 	output reg [DW-1:0] data_out);
 
 	
@@ -20,7 +19,7 @@ module EXE
 	assign imm_I	= { {20{inst[31]}}, inst[30:20] };
 	assign imm_S	= { {20{inst[31]}}, inst[30:25],inst[11:7]};
 	assign imm_B	= { {19{inst[31]}},inst[7],inst[30:25],inst[11:8], 1'b0};
-	assign imm_U	= { {inst[31:12]}, {12{1'b0}} };
+	assign imm_U	= { {inst[31:12]}, {12'b0} };
 	assign imm_J	= { {11{inst[31]}}, inst[19:12],inst[20],inst[30:21], 1'b0};
 	assign funct7 	= inst[31:25];
 	assign rs2 		= inst[24:20];
@@ -31,8 +30,6 @@ module EXE
 	assign jalr_add = dataA + imm_I;
 
 	always @(*) begin
-		inst_o = inst;
-
 		if (inst[1:0] != 2'b11) begin
 			$display("ERROR IN INSTRUCTION");
 			$display(inst);
@@ -189,12 +186,10 @@ module EXE
 				end
 			default:
 				begin
-					$display("Unknown opcode: %b!",opcode);
+					// $display("Unknown opcode: %b!",opcode);
 				end
 
 		endcase
 	end
-
-
 
 endmodule

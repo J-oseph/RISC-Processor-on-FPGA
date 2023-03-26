@@ -1,4 +1,5 @@
-`include "definitions.v"
+`include "hdl/definitions.v"// definitions for all of the global variables
+
 module ID 
 #(	parameter RFW = 5,
 	parameter IMW = 4,

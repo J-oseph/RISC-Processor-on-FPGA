@@ -15,6 +15,7 @@ module PC
 		out_c = out_r + 1;
 	end
 	always @(posedge clk) begin
+		$display("Program Counter = %b",out_r);
 		out_r <= #1 out_c;
 	end
 

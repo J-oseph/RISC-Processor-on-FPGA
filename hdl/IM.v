@@ -12,7 +12,7 @@ module IM
 	assign out = im[address];
 
 	initial begin
-	  $readmemh ("IM.txt", im);
+	  $readmemh ("hdl/IM.txt", im);
 	end
 
 endmodule
