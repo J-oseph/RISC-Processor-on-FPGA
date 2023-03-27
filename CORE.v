@@ -11,9 +11,10 @@ module CORE
 	);
 
 	reg [IMW-1:0] pc_in;
+	wire rf_we;
 	wire [IMW-1:0] pc_out;
 	wire [IW-1:0] im_inst, if_id_inst, id_exe_inst, exe_mem_inst, mem_wb_inst;
-	wire [RFW-1:0] addrA,addrB;
+	wire [RFW-1:0] addrA, addrB, rd_if_id, rd_id_exe, rd_exe_mem, rd_mem_wb;
 	wire [DW-1:0] imm, r1, r2, r1_o, r2_o, alu_out, mem_data, wb_in;
 
 	PC #(.RFW(RFW), .IMW(IMW), .DW(DW), .IW(IW)) 
@@ -39,6 +40,7 @@ module CORE
 			.inst(if_id_inst),
 			.addrA(addrA),
 			.addrB(addrB),
+			.rd(rd_if_id),
 			.imm(imm));
 	
   	RF #(.RFW(RFW),.IMW(IMW),.DW(DW),.IW(IW))
@@ -56,8 +58,10 @@ module CORE
 			.out_inst(id_exe_inst), 
 			.r1(r1), 
 			.r2(r2), 
+			.rd(rd_if_id),
 			.r1_o(r1_o), 
-			.r2_o(r2_o));
+			.r2_o(r2_o),
+			.rd_o(rd_id_exe));
 
 	EXE #(.RFW(RFW),.IMW(IMW),.DW(DW),.IW(IW))
 		alu (
@@ -71,8 +75,10 @@ module CORE
 			.clk(clk),
 			.in(alu_out),
 			.in_inst(id_exe_inst),
+			.rd(rd_id_exe),
 			.out(mem_data),
-			.out_inst(exe_mem_inst));
+			.out_inst(exe_mem_inst),
+			.rd_o(rd_exe_mem));
 
 	// TODO! add memory logic
 	
@@ -81,8 +87,17 @@ module CORE
 			.clk(clk),
 			.in(mem_data),
 			.in_inst(exe_mem_inst),
+			.rd(rd_exe_mem),
 			.out(wb_in),
-			.out_inst(mem_wb_inst));
+			.out_inst(mem_wb_inst),
+			.rd_o(rd_mem_wb));
+	
+  	WB #(.RFW(RFW),.IMW(IMW),.DW(DW),.IW(IW))
+        write_back_logic (
+			.inst(mem_wb_inst),
+			.rd(rd_mem_wb),
+			.rf_we(rf_we));
+
 
 
 

@@ -5,12 +5,13 @@ module ID
 	parameter IMW = 4,
 	parameter DW = 32,
 	parameter IW = 32)
-(	input wire [IW-1:0] inst,
-	output reg [RFW-1:0] addrA,
-	output reg [RFW-1:0] addrB,
-	output reg [DW-1:0] imm);
+(	input wire 	[IW-1:0] inst,
+	output reg 	[RFW-1:0] addrA,
+	output reg 	[RFW-1:0] addrB,
+	output wire [RFW-1:0] rd,
+	output reg 	[DW-1:0] imm);
 
-	wire [RFW-1:0] rs2, rs1, rd;
+	wire [RFW-1:0] rs2, rs1;
 	wire [6:0] funct7;
 	wire [6:0] opcode;
 	wire [2:0] funct3;
