@@ -28,7 +28,7 @@ module tb_CORE;
 		start = 1'b0;
 		#1 start = 1'b1;
 
-		#200 $display("==== Completed Simulation :D ====\n");
+		#600 $display("==== Completed Simulation :D ====\n");
 		$finish;
 	end
 	

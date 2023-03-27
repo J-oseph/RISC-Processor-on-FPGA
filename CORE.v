@@ -15,7 +15,7 @@ module CORE
 	wire [IMW-1:0] pc_out;
 	wire [IW-1:0] im_inst, if_id_inst, id_exe_inst, exe_mem_inst, mem_wb_inst;
 	wire [RFW-1:0] addrA, addrB, rd_if_id, rd_id_exe, rd_exe_mem, rd_mem_wb;
-	wire [DW-1:0] imm, r1, r2, r1_o, r2_o, alu_out, mem_data, wb_in;
+	wire [DW-1:0] imm, r1, r2, r1_o, r2_o, alu_out, mem_data, wb_data;
 
 	PC #(.RFW(RFW), .IMW(IMW), .DW(DW), .IW(IW)) 
 		program_counter (
@@ -46,8 +46,11 @@ module CORE
   	RF #(.RFW(RFW),.IMW(IMW),.DW(DW),.IW(IW))
      	register_file (
 			.clk(clk),
+			.we(rf_we),
+			.wreg(rd_mem_wb),
 			.reg1(addrA),
 			.reg2(addrB),
+			.wdata(wb_data),
 			.reg1data(r1),
 			.reg2data(r2));
 	
@@ -88,7 +91,7 @@ module CORE
 			.in(mem_data),
 			.in_inst(exe_mem_inst),
 			.rd(rd_exe_mem),
-			.out(wb_in),
+			.out(wb_data),
 			.out_inst(mem_wb_inst),
 			.rd_o(rd_mem_wb));
 	

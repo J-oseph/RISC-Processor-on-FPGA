@@ -16,7 +16,7 @@ module WB
     always @(*) begin
         rf_we = 1'b0;
 
-        if (opcode == `OP || opcode == `OP_IMM ) begin
+        if (opcode == `OP || opcode == `OP_IMM || opcode == `LUI) begin
             rf_we = 1'b1;
         end
 

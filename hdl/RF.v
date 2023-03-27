@@ -6,13 +6,13 @@ module RF
 	parameter IW = 32)
 (
 	input wire 				clk,
-	//input wire 				rf_we,
+	input wire 				we,
 	//input wire  [IW-1:0] 	alu_forward_inst,	
 	//input wire  [IW-1:0] 	mem_forward_inst,	
 	input wire 	[RFW-1:0]	reg1,
 	input wire 	[RFW-1:0]	reg2,
-	//input wire 	[RFW-1:0]	wreg,
-	//input wire 	[DW-1:0]	wdata,
+	input wire 	[RFW-1:0]	wreg,
+	input wire 	[DW-1:0]	wdata,
 	//input wire 	[DW-1:0]	alu_rf_forward,
 	//input wire 	[DW-1:0]	mem_rf_forward,
 	output reg 	[DW-1:0] 	reg1data,
@@ -57,11 +57,11 @@ module RF
 	end
 	
 
-	/*always @(negedge clk) begin
-		if (rf_we) begin
+	always @(negedge clk) begin
+		if (we) begin
 			rf[wreg] <= #1 wdata;
 		end
-	end*/
+	end
 
 	initial begin
 		for (i=0;i<2**RFW;i=i+1) begin
