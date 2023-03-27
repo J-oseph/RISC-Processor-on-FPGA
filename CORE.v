@@ -12,9 +12,9 @@ module CORE
 
 	reg [IMW-1:0] pc_in;
 	wire [IMW-1:0] pc_out;
-	wire [IW-1:0] im_inst, if_id_inst, id_exe_inst, exe_mem_inst;
+	wire [IW-1:0] im_inst, if_id_inst, id_exe_inst, exe_mem_inst, mem_wb_inst;
 	wire [RFW-1:0] addrA,addrB;
-	wire [DW-1:0] imm, r1, r2, r1_o, r2_o, alu_out, mem_data;
+	wire [DW-1:0] imm, r1, r2, r1_o, r2_o, alu_out, mem_data, wb_in;
 
 	PC #(.RFW(RFW), .IMW(IMW), .DW(DW), .IW(IW)) 
 		program_counter (
@@ -73,6 +73,18 @@ module CORE
 			.in_inst(id_exe_inst),
 			.out(mem_data),
 			.out_inst(exe_mem_inst));
+
+	// TODO! add memory logic
+	
+  	MEM_WB #(.RFW(RFW),.IMW(IMW),.DW(DW),.IW(IW))
+        mem_wb_buffer (
+			.clk(clk),
+			.in(mem_data),
+			.in_inst(exe_mem_inst),
+			.out(wb_in),
+			.out_inst(mem_wb_inst));
+
+
 
 	always @(posedge start)
 	begin
