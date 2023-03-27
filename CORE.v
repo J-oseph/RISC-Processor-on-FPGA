@@ -15,7 +15,7 @@ module CORE
 	wire [IMW-1:0] pc_out;
 	wire [IW-1:0] im_inst, if_id_inst, id_exe_inst, exe_mem_inst, mem_wb_inst;
 	wire [RFW-1:0] addrA, addrB, rd_if_id, rd_id_exe, rd_exe_mem, rd_mem_wb;
-	wire [DW-1:0] imm, r1, r2, r1_o, r2_o, alu_out, mem_data, wb_data;
+	wire [DW-1:0] imm, r1, r2, r1_o, r2_o, alu_out, mem_data, wb_data, r1_f, r2_f;
 
 	PC #(.RFW(RFW), .IMW(IMW), .DW(DW), .IW(IW)) 
 		program_counter (
@@ -54,13 +54,27 @@ module CORE
 			.reg1data(r1),
 			.reg2data(r2));
 	
+  	FU #(.RFW(RFW),.IMW(IMW),.DW(DW),.IW(IW))
+		forwarding_unit (
+			.reg1(addrA),
+			.reg2(addrB),
+			.reg1data(r1),
+			.reg2data(r2),
+			.exedata(alu_out),
+			.exeinst(id_exe_inst),
+			.memdata(mem_data),
+			.meminst(exe_mem_inst),
+			.reg1data_out(r1_f),
+			.reg2data_out(r2_f)
+		);
+	
   	ID_EXE #(.RFW(RFW),.IMW(IMW),.DW(DW),.IW(IW))
 		id_exe_buffer (
 			.clk(clk),
 			.in_inst(if_id_inst),
 			.out_inst(id_exe_inst), 
-			.r1(r1), 
-			.r2(r2), 
+			.r1(r1_f), 
+			.r2(r2_f), 
 			.rd(rd_if_id),
 			.r1_o(r1_o), 
 			.r2_o(r2_o),

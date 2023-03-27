@@ -12,3 +12,4 @@
 `include "hdl/MEM.v"		// data memory
 `include "hdl/MEM_WB.v"		// memory / write back buffer
 `include "hdl/WB.v"			// write back
+`include "hdl/FU.v"			// forwarding unit

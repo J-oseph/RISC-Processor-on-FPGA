@@ -65,7 +65,7 @@ module RF
 
 	initial begin
 		for (i=0;i<2**RFW;i=i+1) begin
-			rf[i] <= 32'bX;
+			rf[i] <= 32'b0;
 		end
 	end
 

@@ -13,7 +13,7 @@ module tb_CORE;
 	reg clk;
 	reg start;
 	parameter RFW = 5;
-	parameter IMW = 4;
+	parameter IMW = 5;
 	parameter DW  = 32;
 	parameter IW  = 32;
 
