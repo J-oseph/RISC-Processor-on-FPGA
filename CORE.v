@@ -12,9 +12,9 @@ module CORE
 
 	reg [IMW-1:0] pc_in;
 	wire [IMW-1:0] pc_out;
-	wire [IW-1:0] im_inst, if_id_inst, id_exe_inst;
+	wire [IW-1:0] im_inst, if_id_inst, id_exe_inst, exe_mem_inst;
 	wire [RFW-1:0] addrA,addrB;
-	wire [DW-1:0] imm, r1, r2, r1_o, r2_o, alu_out;
+	wire [DW-1:0] imm, r1, r2, r1_o, r2_o, alu_out, mem_data;
 
 	PC #(.RFW(RFW), .IMW(IMW), .DW(DW), .IW(IW)) 
 		program_counter (
@@ -65,7 +65,14 @@ module CORE
 			.dataA(r1_o),
 			.dataB(r2_o),
 			.data_out(alu_out));
-
+	
+  	EXE_MEM #(.RFW(RFW),.IMW(IMW),.DW(DW),.IW(IW))
+        exe_mem_buffer (
+			.clk(clk),
+			.in(alu_out),
+			.in_inst(id_exe_inst),
+			.out(mem_data),
+			.out_inst(exe_mem_inst));
 
 	always @(posedge start)
 	begin
